@@ -1,10 +1,10 @@
-from test.integration.webapp import base_url
+# from test.integration.webapp import base_url
 import requests
 import re
 
 def test_landing(base_url):
     response = requests.get(f"{base_url}/")
-    html     = response.text
+    html = response.text
 
     assert response.status_code == 200
    
