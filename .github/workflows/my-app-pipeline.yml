@@ -101,24 +101,27 @@ jobs:
       - name: Pull restapp image from Docker Hub
         run: docker pull elamcano/restapp:${{ env.IMAGE_NAME }}
 
+      - name: Check if redis exist
+        run: |
+          docker stop redisService
+          docker rm redisService
+
       - name: Start Redis container
-        run: docker run -d --name redisService -p 6379:6379 redis
+        run: docker run --name redisService --network redis -p 6379:6379 -d redis:alpine
+
+      - name: Check if restapp exist
+        run: |
+          docker stop restapp
+          docker rm restapp
+
+      - name: Get ip dinamically
+        run: redisIP = (docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redisService)
 
       - name: Start restapp container
-        run: docker run -d --name restappContainer --link redisService -e REDIS_HOST=redisService -p 5000:5000 elamcano/restapp:${{ env.IMAGE_NAME }}
-
-      - name: Wait for restapp to be ready
-        run: |
-          for i in {1..10}; do
-            curl -s http://localhost:5000 && break
-            echo "Waiting for app to start..."
-            sleep 3
-          done
+        run: docker run --name restapp --network redis -p 5000:5000 -d elamcano/${{ env.IMAGE_NAME }}
 
       - name: Run integration tests
-        run: |
-          pip install -r requirements.txt
-          pytest test/integration -v
+        run: docker exec restapp sh -c "python -m pytest test/integration -v"
 
   ## 🚀 4.
   deploy-prod:
