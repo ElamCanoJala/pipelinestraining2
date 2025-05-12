@@ -1,5 +1,7 @@
+# flake8: noqa
+
 from unittest.mock import patch
-from test.unit.webapp import client  # noqa: F401 F811
+from test.unit.webapp import client
 
 
 @patch("restApp.cache.incr")
