@@ -74,6 +74,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Pull restapp image from Docker Hub
+        run: docker pull elamcano/restapp:${{ env.IMAGE_TAG }}
+
+      - name: Start Redis container
+        run: docker run -d --name redisService -p 6379:6379 redis
+
+      - name: Start restapp container
+        run: docker run -d --name restappContainer --link redisService \
+          -e REDIS_HOST=redisService -p 5000:5000 elamcano/restapp:${{ env.IMAGE_TAG }}
+
+      - name: Wait for restapp to be ready
+        run: |
+          for i in {1..10}; do
+            curl -s http://localhost:5000 && break
+            echo "Waiting for app to start..."
+            sleep 3
+          done
+
+      - name: Run integration tests
+        run: |
+          pip install -r requirements.txt
+          pytest test/integration -v
+
   ## 🚀 4.
   deploy-prod:
     runs-on: ubuntu-latest
