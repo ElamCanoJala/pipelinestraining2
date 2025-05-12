@@ -101,7 +101,10 @@ jobs:
       - name: Pull restapp image from Docker Hub
         run: docker pull elamcano/restapp:${{ env.IMAGE_NAME }}
 
-      - name: Check if redis exist
+      - name: Create Docker network if not exists
+        run: docker network inspect redis >/dev/null 2>&1 || docker network create redis
+
+      - name: Stop and remove old Redis container if exists
         run: |
           docker stop redisService || true
           docker rm redisService || true
@@ -109,16 +112,13 @@ jobs:
       - name: Start Redis container
         run: docker run --name redisService --network redis -p 6379:6379 -d redis:alpine
 
-      - name: Check if restapp exist
+      - name: Stop and remove old restapp container if exists
         run: |
           docker stop restapp || true
           docker rm restapp || true
 
-      - name: Get ip dinamically
-        run: redisIP = (docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' redisService)
-
       - name: Start restapp container
-        run: docker run --name restapp --network redis -p 5000:5000 -d elamcano/${{ env.IMAGE_NAME }}
+        run: docker run --name restapp --network redis -p 5000:5000 -d elamcano/restapp:${{ env.IMAGE_NAME }}
 
       - name: Run integration tests
         run: docker exec restapp sh -c "python -m pytest test/integration -v"
@@ -134,4 +134,3 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-#
