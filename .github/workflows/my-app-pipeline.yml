@@ -3,8 +3,6 @@ name: CI
 on:
   push:
     branches: ["elamCano_p2_dev", "elamCano_p2_base"]
-  #pull_request:
-  # branches: ["elamCano_p2_dev", "maielamCano_p2_base"]
 
   workflow_dispatch:
 
