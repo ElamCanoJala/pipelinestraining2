@@ -1,4 +1,3 @@
-# from test.integration.webapp import base_url
 import requests
 import re
 
