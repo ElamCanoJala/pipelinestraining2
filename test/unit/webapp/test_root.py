@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from test.unit.webapp import client  # noqa: F401
+from test.unit.webapp import client  # noqa: F401 F811
 
 
 @patch("restApp.cache.incr")
