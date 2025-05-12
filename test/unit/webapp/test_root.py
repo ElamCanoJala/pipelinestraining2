@@ -1,9 +1,9 @@
 from unittest.mock import patch
-from test.unit.webapp import client # noqa: F401
+from test.unit.webapp import client  # noqa: F401
 
 
 @patch("restApp.cache.incr")
-def test_landing(mock_incr, client):
+def test_landing(mock_incr):
     mock_incr.return_value = 3
     landing = client.get("/")
     html = landing.data.decode()
