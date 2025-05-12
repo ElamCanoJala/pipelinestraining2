@@ -120,6 +120,9 @@ jobs:
       - name: Start restapp container
         run: docker run --name restapp --network redis -p 5000:5000 -d elamcano/restapp:${{ env.IMAGE_NAME }}
 
+      - name: Print restapp logs
+        run: docker logs restapp
+
       - name: Run integration tests
         run: docker exec restapp sh -c "python -m pytest test/integration -v"
 
