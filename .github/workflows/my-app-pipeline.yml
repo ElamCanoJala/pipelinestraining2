@@ -74,6 +74,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set image tag from branch name
+        run: |
+          BRANCH_NAME=${GITHUB_REF##*/}
+          echo "IMAGE_TAG=${BRANCH_NAME}-1.0.0" >> $GITHUB_ENV
+
       - name: Pull restapp image from Docker Hub
         run: docker pull elamcano/restapp:${{ env.IMAGE_TAG }}
 
