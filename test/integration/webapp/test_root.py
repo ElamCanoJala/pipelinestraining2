@@ -1,6 +1,7 @@
 import requests
 import re
 
+
 def test_landing(base_url):
     response = requests.get(f"{base_url}/")
     html = response.text
