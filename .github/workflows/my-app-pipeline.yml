@@ -122,8 +122,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      #- name: Ejecutar tests de integración
-      #  run: pytest test/integration -v
+      - name: Ejecutar tests de integración
+        run: pytest test/integration -v
 
   ## 🚀 4.
   deploy-prod:
