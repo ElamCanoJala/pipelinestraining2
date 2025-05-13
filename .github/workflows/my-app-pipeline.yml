@@ -11,7 +11,7 @@ env:
   IMAGE_NAME: ""
 
 jobs:
-  ## 🌱 0. Set variables
+  # 🌱 0. Set variables
   Set-vars:
     runs-on: ubuntu-latest
     outputs:
