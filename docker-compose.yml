@@ -9,7 +9,7 @@ services:
     restart: always
 
   restapp:
-    image: elamcano/restapp:${{ env.IMAGE_NAME }}
+    image: elamcano/restapp:${IMAGE_NAME}
     networks:
       - app_network
     ports:
