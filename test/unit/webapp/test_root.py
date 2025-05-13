@@ -1,5 +1,8 @@
+# flake8: noqa
+
 from unittest.mock import patch
 from test.unit.webapp import client
+
 
 @patch("restApp.cache.incr")
 def test_landing(mock_incr, client):
