@@ -21,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Necesario para contar todos los commits
+          fetch-depth: 0
 
       - name: Get semantic version and image name
         id: set-vars

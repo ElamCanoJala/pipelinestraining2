@@ -13,6 +13,7 @@ def get_hit_count():
         try:
             return cache.incr('hits')
         except redis.exceptions.ConnectionError as exc:
+            print(f"[ERROR] Redis connection failed. Retries left: {retries}")
             if retries == 0:
                 raise exc
             retries -= 1
@@ -21,5 +22,8 @@ def get_hit_count():
 
 @app.route('/')
 def hello():
-    count = get_hit_count()
-    return 'Hello World! I have been seen {} times.\n'.format(count)
+    try:
+        count = get_hit_count()
+        return f'Hello World! I have been seen {count} times.\n'
+    except Exception as e:
+        return f"Internal Server Error: {str(e)}\n", 500
