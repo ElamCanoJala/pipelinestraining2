@@ -12,7 +12,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://restapp:{{port}}/",
+          "raw": "http://restapp:500/",
           "protocol": "http",
           "host": ["restapp"],
           "port": "{{port}}",
