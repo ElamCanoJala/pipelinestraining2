@@ -132,8 +132,7 @@ jobs:
           docker run --rm \
            --network pipelinestraining2_app_network \
             -v "${{ github.workspace }}/tests/postman:/etc/newman" \
-            postman/newman run collectionRestAppTest.json \
-            --environment env.json
+            postman/newman run collectionRestAppTest.json
 
   ## 🚀 4.
   Deploy-prod:
