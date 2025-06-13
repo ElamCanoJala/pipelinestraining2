@@ -131,7 +131,7 @@ jobs:
           docker network ls
           docker run --rm \
            --network pipelinestraining2_app_network \
-            -v "${{ github.workspace }}/tests/postman:/etc/newman" \
+            -v "${{ github.workspace }}/utils/tests/postman:/etc/newman" \
             postman/newman run collectionRestAppTest.json
 
   ## 🚀 4.
