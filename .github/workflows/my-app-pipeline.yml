@@ -124,17 +124,17 @@ jobs:
 
       # - name: Integration tests
       #   run: pytest test/integration -v
-      
+
       - name: Run Newman integration tests
         run: |
-        docker pull postman/newman
-        RESTAPP_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' restapp)
+          docker pull postman/newman
+          RESTAPP_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' restapp)
 
-        docker run --rm \
-          --add-host "restapp:$RESTAPP_IP" \
-          -v "$(pwd)/tests/postman:/etc/newman" \
-          postman/newman run collectionRestAppTest.json \
-          --environment env.json
+          docker run --rm \
+            --add-host "restapp:$RESTAPP_IP" \
+            -v "$(pwd)/tests/postman:/etc/newman" \
+            postman/newman run collectionRestAppTest.json \
+            --environment env.json
 
   ## 🚀 4.
   Deploy-prod:
