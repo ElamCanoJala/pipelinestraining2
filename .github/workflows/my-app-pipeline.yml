@@ -130,7 +130,7 @@ jobs:
           docker pull postman/newman
           docker network ls
           docker run --rm \
-            --network app_network \
+           --network pipelinestraining2_app_network \
             -v "${{ github.workspace }}/tests/postman:/etc/newman" \
             postman/newman run collectionRestAppTest.json \
             --environment env.json
