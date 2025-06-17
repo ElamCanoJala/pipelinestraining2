@@ -136,9 +136,9 @@ jobs:
 
       - name: Run Artillery load test
         run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/tests/performance:/src \
-            artilleryio/artillery run test.yml
+         docker run --rm \
+          -v ${{ github.workspace }}/tests/performance:/home/node/artillery \
+          artilleryio/artillery run test.yml
 
   ## 🚀 4.
   Deploy-prod:
