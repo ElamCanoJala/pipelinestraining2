@@ -134,6 +134,12 @@ jobs:
             -v "${{ github.workspace }}/utils/tests/postman:/etc/newman" \
             postman/newman run collectionRestAppTest.json
 
+      - name: Run Artillery load test
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/tests/performance:/src \
+            artilleryio/artillery run test.yml
+
   ## 🚀 4.
   Deploy-prod:
     runs-on: ubuntu-latest
