@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  target:
+    build: ./target
+    container_name: ansible_target
+    hostname: target
+    networks:
+      - ansible_net
+    ports:
+      - "2222:22"
+
+  control:
+    build: ./control
+    container_name: ansible_control
+    hostname: control
+    volumes:
+      - ./control:/workspace
+    networks:
+      - ansible_net
+    depends_on:
+      - target
+    tty: true
+
+networks:
+  ansible_net:
